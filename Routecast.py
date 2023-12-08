@@ -1,3 +1,6 @@
+import sys
+sys.dont_write_bytecode = True # disables pycache generation
+
 from methods import *
 import place
 from flask import Flask, request, render_template
