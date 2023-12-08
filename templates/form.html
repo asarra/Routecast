@@ -1,5 +1,36 @@
-<form method="POST">
-    <input name="text">
-    <input name="text2">
-    <input type="submit">
-</form>
+<html>
+	<head>
+		<style>
+			#route-data {
+				& input,
+				& button {
+					padding: 5px;
+					border: 1px solid #DDD;
+					border-radius: 0.2rem;
+				}
+				& button {
+					
+				}
+				& .btn-commit {
+					width: 80px;
+					color: #FFF;
+					background-color: #5CB85C;
+					border-color: #4CAE4C;
+					font-weight: bold;
+					cursor: pointer;
+					&:hover {
+						background-color: #449D44;
+						border-color: #398439
+					}
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<form id="route-data" method="POST" action="http://127.0.0.1:3000">
+			<input id="start" name="text" class="feld"/>
+			<input id="end" name="text2" class="feld"/>
+			<button class="btn btn-commit" type="submit"> Los </button>
+		</form>
+	</body>
+</html>
