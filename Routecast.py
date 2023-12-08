@@ -1,7 +1,9 @@
 from methods import *
 import place
 from flask import Flask, request, render_template
+import os
 
+flag = False
 
 def createDetailedMap(placeTerm1, placeTerm2):
     place1 = place.Place()
@@ -21,29 +23,29 @@ def createDetailedMap(placeTerm1, placeTerm2):
     createMap(place1, place2, distance, duration, steps, polygon)
 
 
-def openDetailedMap():
-    import os
-    os.system("start index.html")
-
 
 app = Flask(__name__)
 
 @app.route('/')
-def detailedMap():
-    return app.send_static_file('.\index.html')
-
-@app.route('/')
 def form():
+    global flag
+    if (flag):
+        # os.system("start ./static/index.html")
+        flag = False
+        return app.send_static_file('index.html')
     return render_template('form.html')
 
 @app.route('/', methods=['POST'])
 def form_post():
     placeTerm1 = request.form['text']
     placeTerm2 = request.form['text2']
+    # return (placeTerm1, placeTerm2)
     createDetailedMap(placeTerm1, placeTerm2)
-    # openDetailedMap()
-    # return app.send_static_file('.\index.html')
-    ##  return form()
-    return detailedMap()
+    global flag
+    flag = True
+    return form()
+    
 
-app.run(host='127.0.0.1', port=5000)
+app.run(host='127.0.0.1', port=3000)
+
+# createDetailedMap(placeTerm1, placeTerm2)
