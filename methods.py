@@ -1,3 +1,6 @@
+import sys
+sys.dont_write_bytecode = True # disables pycache generation
+
 import folium, requests, json
 from folium import Element
 
@@ -143,11 +146,14 @@ def createMap(place1, place2, distance, duration, steps, polygon):
     m.get_root().html.add_child(folium.Element("""
     <div style="position: fixed;
                 background-color: white;
-                padding: 2px;
+                padding: 5px;
                 border: 1px solid #333;
+                border-radius: 15px;
                 z-index: 9999;
-                width: auto;
+                width: 30em;
                 bottom: 0;
+                overflow: scroll;
+                right: 0;
                 ">
         <h1>Routeninformationen</h1><br>
         <h3>Entfernung: %s m</h3>
