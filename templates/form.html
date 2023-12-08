@@ -1,8 +1,30 @@
 <html>
 	<head>
+		<script type="text/javascript" src="../lib/jquery.js"></script>
 		<script>
+			$( document ).ready( function() {
+				$( '#route-data' ).on( 'submit', function( e ) {
+					prepareRouteData();
+				} );
+			} );
+			
 			function prepareRouteData() {
-				
+				$( '#text' ).val(
+					buildRouteString( '#start' )
+				);
+				$( '#text2' ).val(
+					buildRouteString( '#end' )
+				);
+			}
+			
+			function buildRouteString( context ) {
+				var params = [];
+				$( 'input[data]', context ).each( function() {
+					var val = $(this).val(); console.log( val );
+					if( val != "" )
+						params.push( val );
+				} );
+				return params.join( ' ' );
 			}
 		</script>
 		<style>
@@ -81,7 +103,7 @@
 					<label>Land</label>
 					<input data="country"/>
 				</div>
-				<input name="text" style="display: none;"/>
+				<input id="text" name="text" style="display: none;"/>
 			</div>
 			<div id="end">
 				<div class="caption">
@@ -107,7 +129,7 @@
 					<label>Land</label>
 					<input data="country"/>
 				</div>
-				<input name="text2" style="display: none;"/>
+				<input id="text2" name="text2" style="display: none;"/>
 			</div>
 			<button class="btn btn-commit" type="submit"> Los </button>
 		</form>
