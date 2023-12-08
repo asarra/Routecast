@@ -157,4 +157,4 @@ def createMap(place1, place2, distance, duration, steps, polygon):
     </div>
     """%(distance, duration, steps_list)))
 
-    m.save("index.html")
+    m.save("./static/index.html")
