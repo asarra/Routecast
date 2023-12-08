@@ -1,15 +1,44 @@
 <html>
 	<head>
+		<script>
+			function prepareRouteData() {
+				
+			}
+		</script>
 		<style>
 			#route-data {
+				border-collapse: collapse;
+				& #start,
+				& #end {
+					width: 400px;
+					display: table-cell;
+					background-color: #EEE;
+					border: 1px solid #666;
+					& .caption {
+						padding: 10px;
+						font-size: 14pt;
+						text-align: center;
+						background-color: #CCC;
+						border-bottom: 1px solid #666;
+					}
+					& .input-group {
+						display: flex;
+						padding: 5px 10px;
+						& label {
+							width: 20%;
+							padding: 5px 10px;
+							text-align: right;
+						}
+						& input {
+							width: 80%;
+						}
+					}
+				}
 				& input,
 				& button {
 					padding: 5px;
 					border: 1px solid #DDD;
 					border-radius: 0.2rem;
-				}
-				& button {
-					
 				}
 				& .btn-commit {
 					width: 80px;
@@ -28,8 +57,58 @@
 	</head>
 	<body>
 		<form id="route-data" method="POST" action="http://127.0.0.1:3000">
-			<input id="start" name="text" class="feld"/>
-			<input id="end" name="text2" class="feld"/>
+			<div id="start">
+				<div class="caption">
+					Startpunkt
+				</div>
+				<div class="input-group">
+					<label>Name</label>
+					<input data="name"/>
+				</div>
+				<div class="input-group">
+					<label>Addresse</label>
+					<input data="address"/>
+				</div>
+				<div class="input-group">
+					<label>PLZ</label>
+					<input data="zip"/>
+				</div>
+				<div class="input-group">
+					<label>Ort</label>
+					<input data="city"/>
+				</div>
+				<div class="input-group">
+					<label>Land</label>
+					<input data="country"/>
+				</div>
+				<input name="text" style="display: none;"/>
+			</div>
+			<div id="end">
+				<div class="caption">
+					Ziel
+				</div>
+				<div class="input-group">
+					<label>Name</label>
+					<input data="name"/>
+				</div>
+				<div class="input-group">
+					<label>Addresse</label>
+					<input data="address"/>
+				</div>
+				<div class="input-group">
+					<label>PLZ</label>
+					<input data="zip"/>
+				</div>
+				<div class="input-group">
+					<label>Ort</label>
+					<input data="city"/>
+				</div>
+				<div class="input-group">
+					<label>Land</label>
+					<input data="country"/>
+				</div>
+				<input name="text2" style="display: none;"/>
+			</div>
 			<button class="btn btn-commit" type="submit"> Los </button>
 		</form>
 	</body>
