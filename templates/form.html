@@ -1,10 +1,15 @@
-<html>
+<html charset="UTF-8">
 	<head>
 		<script type="text/javascript" src="../lib/jquery.js"></script>
 		<script>
 			$( document ).ready( function() {
 				$( '#route-data' ).on( 'submit', function( e ) {
 					prepareRouteData();
+				} );
+				
+				$( '#route-data' ).on( 'keydown', 'input', function( e ) {
+					if( e.key.charCodeAt(0) > 127 )
+						e.preventDefault();
 				} );
 			} );
 			
