@@ -103,8 +103,15 @@ def getDirection(m1_x, m1_y, m2_x, m2_y):
                                     })
     if response.status_code == 200 and 'application/json' in response.headers.get('Content-Type',''):
         rj = json.loads(response.text)
-        distance = rj["routes"][0]["summary"]["distance"]
-        duration = rj["routes"][0]["summary"]["duration"]
+
+        # Wurde geändert in der API-Response. Lieber nach Summary prüfen ab jetzt
+        if (rj["routes"][0]["summary"]):
+            distance = rj["routes"][0]["summary"]["distance"]
+            duration = rj["routes"][0]["summary"]["duration"]
+        else:
+            distance = ""
+            duration = ""
+
         steps = rj["routes"][0]["segments"][0]["steps"]
         polygon = decode_polyline(rj["routes"][0]["geometry"])
         return (distance, duration, steps, polygon)

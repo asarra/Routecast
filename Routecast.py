@@ -12,10 +12,8 @@ def createDetailedMap(placeTerm1, placeTerm2):
     place1 = place.Place()
     place2 = place.Place()
 
-    # text = "wortmann hüllhors"
     place1.x, place1.y, place1.name = getXYName(placeTerm1)
 
-    # text2 = "Lübbecke Berufskoll"
     place2.x, place2.y, place2.name = getXYName(placeTerm2)
 
     place1.clouds, place1.temp = getWeather(place1.x, place1.y)
@@ -47,7 +45,7 @@ def form_post():
     global flag
     flag = True
     return form()
-    
+
 
 app.run(host='127.0.0.1', port=3000)
 

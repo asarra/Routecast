@@ -1,18 +1,19 @@
 <html charset="UTF-8">
 	<head>
-		<script type="text/javascript" src="../lib/jquery.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+		<!--<script type="text/javascript" src="../lib/jquery.js"></script>-->
 		<script>
 			$( document ).ready( function() {
 				$( '#route-data' ).on( 'submit', function( e ) {
 					prepareRouteData();
 				} );
-				
+
 				$( '#route-data' ).on( 'keydown', 'input', function( e ) {
 					if( e.key.charCodeAt(0) > 127 )
 						e.preventDefault();
 				} );
 			} );
-			
+
 			function prepareRouteData() { // Test
 				$( '#text' ).val(
 					buildRouteString( '#start' )
@@ -21,7 +22,7 @@
 					buildRouteString( '#end' )
 				);
 			}
-			
+
 			function buildRouteString( context ) {
 				var params = [];
 				$( 'input[data]', context ).each( function() {
