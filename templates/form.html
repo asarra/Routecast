@@ -7,11 +7,30 @@
 				$( '#route-data' ).on( 'submit', function( e ) {
 					prepareRouteData();
 				} );
-
-				$( '#route-data' ).on( 'keydown', 'input', function( e ) {
-					if( e.key.charCodeAt(0) > 127 )
-						e.preventDefault();
-				} );
+			} );
+			
+			$( document ).on( 'input', '#route-data input[data="name"]', function( e ) {
+				var context = $(this).parent();
+				var inputText = $(this).val();
+				autoComplete( inputText, context );
+			} );
+			
+			$( document ).on( 'blur', '#route-data input[data="name"]', function( e ) {
+				var context = $(this).parent();
+				var elements = document.elementsFromPoint( mouseX, mouseY );
+				var option = elements.find( (e) => { return $(e).is('.ac-option'); } );
+				if( option ) {
+					var text = $( option ).html();
+					$( 'input', context ).val( text );
+				}
+				
+				$( '.ac-dropdown', context ).remove();
+			} );
+			
+			var mouseX = 0, mouseY = 0;
+			$( document ).on( 'mousemove', '#route-data', function( e ) {
+				mouseX = e.clientX;
+				mouseY = e.clientY;
 			} );
 
 			function prepareRouteData() { // Test
@@ -26,11 +45,36 @@
 			function buildRouteString( context ) {
 				var params = [];
 				$( 'input[data]', context ).each( function() {
-					var val = $(this).val(); console.log( val );
+					var val = $(this).val();
 					if( val != "" )
 						params.push( val );
 				} );
 				return params.join( ' ' );
+			}
+			
+			function autoComplete( inputText, context ) {
+				$.ajax( {
+					type: 'POST',
+					dataType: 'json',
+					url: 'http://127.0.0.1:3000',
+					data: {text: inputText},
+					success: function( response ) {
+						console.log( response );
+						//renderDropdown( response, context );
+					}
+				} )/*.fail( function( msg ) {
+					console.warn( msg.responseText );
+				} )*/;
+			}
+			
+			function renderDropdown( data, context ) {
+				var $dropdown = $( '<div class="ac-dropdown"/>' );
+				$.each( data, function( idx, opt ) {
+					var $option = $( '<div class="ac-option"/>' );
+					$option.html( opt.text );
+					$dropdown.append( $option );
+				} );
+				$( context ).append( $dropdown );
 			}
 		</script>
 		<style>
@@ -52,6 +96,7 @@
 					& .input-group {
 						display: flex;
 						padding: 5px 10px;
+						position: relative;
 						& label {
 							width: 20%;
 							padding: 5px 10px;
@@ -59,6 +104,7 @@
 						}
 						& input {
 							width: 80%;
+							height: 30px;
 						}
 					}
 				}
@@ -81,15 +127,31 @@
 					}
 				}
 			}
+			
+			.ac-dropdown {
+				width: 380px;
+				position: absolute;
+				z-index: 100;
+				margin-top: 30px;
+				background-color: #FFF;
+				border: 1px solid #CCC;
+				& .ac-option {
+					padding: 3px;
+					&:hover {
+						color: #FFF;
+						background-color: #337AB7;
+					}
+				}
+			}
 		</style>
 	</head>
 	<body>
-		<form id="route-data" method="POST" action="http://127.0.0.1:3000">
+		<form id="route-data" method="POST" accept-charset="UTF-8" action="http://127.0.0.1:3000">
 			<div id="start">
 				<div class="caption">
 					Startpunkt
 				</div>
-				<div class="input-group">
+				<div class="input-group main">
 					<label>Name</label>
 					<input data="name"/>
 				</div>
@@ -109,13 +171,13 @@
 					<label>Land</label>
 					<input data="country"/>
 				</div>
-				<input id="text" name="text" style="display: none;"/>
+				<input type="hidden"  id="text" name="text"/>
 			</div>
 			<div id="end">
 				<div class="caption">
 					Ziel
 				</div>
-				<div class="input-group">
+				<div class="input-group main">
 					<label>Name</label>
 					<input data="name"/>
 				</div>
@@ -135,7 +197,7 @@
 					<label>Land</label>
 					<input data="country"/>
 				</div>
-				<input id="text2" name="text2" style="display: none;"/>
+				<input type="hidden" id="text2" name="text2"/>
 			</div>
 			<button class="btn btn-commit" type="submit"> Los </button>
 		</form>
