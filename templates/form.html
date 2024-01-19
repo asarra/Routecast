@@ -53,23 +53,28 @@
 			}
 			
 			function autoComplete( inputText, context ) {
-				$.ajax( {
-					type: 'POST',
+				var key = '5b3ce3597851110001cf62488cb0bdac946244b18bfdcbac9887e8b5';
+				var url = "https://api.openrouteservice.org/geocode/autocomplete?api_key=" + key + "&text=" + encodeURI( inputText ) + "&size=5";
+				var xhr = $.ajax( url, {
+					type: 'GET',
 					dataType: 'json',
-					url: 'http://127.0.0.1:3000',
-					data: {text: inputText, text2: ''},
+					scriptCharset: 'UTF-8',
 					success: function( response ) {
 						console.log( response );
-						//renderDropdown( response, context );
+						var options = [];
+						$.each( response.features, function( idx, data ) {
+							options.push( data.properties.name );
+						} );
+						renderDropdown( options, context );
 					}
 				} );
 			}
 			
-			function renderDropdown( data, context ) {
+			function renderDropdown( options, context ) {
 				var $dropdown = $( '<div class="ac-dropdown"/>' );
-				$.each( data, function( idx, opt ) {
+				$.each( options, function( idx, txt ) {
 					var $option = $( '<div class="ac-option"/>' );
-					$option.html( opt.text );
+					$option.html( txt );
 					$dropdown.append( $option );
 				} );
 				$( context ).append( $dropdown );
@@ -136,6 +141,7 @@
 				& .ac-option {
 					padding: 3px;
 					&:hover {
+						cursor: pointer;
 						color: #FFF;
 						background-color: #337AB7;
 					}
