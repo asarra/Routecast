@@ -4,8 +4,8 @@ sys.dont_write_bytecode = True # disables pycache generation
 import folium, requests, json
 from folium import Element
 
-ors_api_key = "5b3ce3597851110001cf62488cb0bdac946244b18bfdcbac9887e8b5"
-weather_api_key = "ae2549fa15d56163a63130ef24a8820e"
+ors_api_key = ""
+weather_api_key = ""
 
 # From https://giscience.github.io/openrouteservice/documentation/Geometry-Decoding.html#python
 def decode_polyline(polyline, is3d=False):

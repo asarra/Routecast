@@ -53,7 +53,7 @@
 			}
 			
 			function autoComplete( inputText, context ) {
-				var key = '5b3ce3597851110001cf62488cb0bdac946244b18bfdcbac9887e8b5';
+				var key = '';
 				var url = "https://api.openrouteservice.org/geocode/autocomplete?api_key=" + key + "&text=" + encodeURI( inputText ) + "&size=5";
 				var xhr = $.ajax( url, {
 					type: 'GET',
